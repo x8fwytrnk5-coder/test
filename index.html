@@ -9,6 +9,7 @@
 <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
 
 <style>
+/* Telo stránky */
 body {
     margin: 0;
     padding: 0;
@@ -17,107 +18,105 @@ body {
     font-family: Arial, sans-serif;
 }
 
+/* Hlavný kontajner */
 #app {
     display: flex;
+    flex-direction: row;
     height: 100dvh;
     width: 100%;
+    overflow: hidden;
 }
 
+/* Mapa vľavo */
+#map {
+    flex: 2;
+    width: 100%;
+    height: 100%;
+    min-height: 100dvh; /* kritické pre iPhone + Android */
+}
 
+/* Pravý panel */
+#rightPanel {
+    flex: 1;
+    background: #f4f4f4;
+    padding: 15px;
+    border-left: 2px solid #ccc;
 
-    /* Mapa vľavo */
-    #map {
-        flex: 2;
-        height: 100%;
-        width: 100%;
-    }
+    /* TOTO JE NAJDÔLEŽITEJŠIE */
+    max-height: 100dvh;
+    overflow-y: auto;
+}
 
-    /* Pravý panel */
-    #rightPanel {
-        flex: 1;
-        background: #f4f4f4;
-        padding: 15px;
-        overflow-y: auto;
-        border-left: 2px solid #ccc;
-    }
+/* Ostatné štýly */
+input {
+    width: 100%;
+    padding: 8px;
+    margin: 6px 0;
+    font-size: 16px;
+}
 
-    h2 {
-        margin-top: 0;
-    }
+button {
+    width: 100%;
+    padding: 10px;
+    margin-top: 10px;
+    font-size: 16px;
+    cursor: pointer;
+    background: #0078ff;
+    color: white;
+    border: none;
+    border-radius: 4px;
+}
 
-    input {
-        width: 100%;
-        padding: 8px;
-        margin: 6px 0;
-        font-size: 16px;
-    }
+#resetBtn {
+    background: #444;
+}
 
-    button {
-        width: 100%;
-        padding: 10px;
-        margin-top: 10px;
-        font-size: 16px;
-        cursor: pointer;
-        background: #0078ff;
-        color: white;
-        border: none;
-        border-radius: 4px;
-    }
+#result {
+    margin-top: 15px;
+    padding: 10px;
+    background: #fff;
+    border-radius: 4px;
+    border: 1px solid #ccc;
+}
 
-    #resetBtn {
-        background: #444;
-        margin-top: 5px;
-    }
+#warningBox {
+    display: none;
+    padding: 10px;
+    margin-top: 10px;
+    border-radius: 4px;
+    font-weight: bold;
+}
 
-    /* Výsledky */
-    #result {
-        margin-top: 15px;
-        padding: 10px;
-        background: #fff;
-        border-radius: 4px;
-        border: 1px solid #ccc;
-    }
+#debugPanel {
+    margin-top: 15px;
+    padding: 10px;
+    background: #222;
+    color: #0f0;
+    height: 200px;
+    overflow-y: auto;
+    font-size: 12px;
+    border-radius: 4px;
+}
 
-    /* Warning box */
-    #warningBox {
-        display: none;
-        padding: 10px;
-        margin-top: 10px;
-        border-radius: 4px;
-        font-weight: bold;
-    }
+.sugBox {
+    background: white;
+    border: 1px solid #ccc;
+    max-height: 120px;
+    overflow-y: auto;
+    margin-top: -5px;
+    margin-bottom: 10px;
+    border-radius: 4px;
+}
 
-    /* Debug panel */
-    #debugPanel {
-        margin-top: 15px;
-        padding: 10px;
-        background: #222;
-        color: #0f0;
-        height: 200px;
-        overflow-y: auto;
-        font-size: 12px;
-        border-radius: 4px;
-    }
+.sugItem {
+    padding: 6px;
+    cursor: pointer;
+}
 
-    /* Autocomplete boxy */
-    .sugBox {
-        background: white;
-        border: 1px solid #ccc;
-        max-height: 120px;
-        overflow-y: auto;
-        margin-top: -5px;
-        margin-bottom: 10px;
-        border-radius: 4px;
-    }
-
-    .sugItem {
-        padding: 6px;
-        cursor: pointer;
-    }
-
-    .sugItem:hover {
-        background: #eee;
-    }
+.sugItem:hover {
+    background: #eee;
+}
+	
 </style>
 </head>
 

@@ -9,10 +9,16 @@
 <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
 
 <style>
-    body {
+    body 
+	#app {
+    display: flex;
+    height: 100dvh;
+    width: 100%;
+}
+
+	{
         margin: 0;
         padding: 0;
-        display: flex;
         height: 100dvh;
         overflow: hidden;
         font-family: Arial, sans-serif;
@@ -115,7 +121,7 @@
 </head>
 
 <body>
-
+<div id="app">
 <div id="map"></div>
 
 <div id="rightPanel">
@@ -428,13 +434,28 @@ window.addEventListener("load", () => {
 });
 
 // =====================
-// GPS – POLOHA VODIČA
+// GPS – POLOHA VODIČA + AUTÍČKO
 // =====================
+
+let driverMarker = null; // pridaj do globálnych premenných
+
 if ("geolocation" in navigator) {
     navigator.geolocation.watchPosition(
         pos => {
-            driverPosition = [pos.coords.latitude, pos.coords.longitude];
-            debug("GPS aktualizácia: " + driverPosition.join(", "));
+            // Ukladáme GPS v správnom formáte (objekt)
+            driverPosition = {
+                lat: pos.coords.latitude,
+                lon: pos.coords.longitude
+            };
+
+            debug("GPS aktualizácia: " + driverPosition.lat + ", " + driverPosition.lon);
+
+            // Autíčko na mape
+            if (!driverMarker) {
+                driverMarker = L.marker([driverPosition.lat, driverPosition.lon]).addTo(map);
+            } else {
+                driverMarker.setLatLng([driverPosition.lat, driverPosition.lon]);
+            }
         },
         err => {
             debug("GPS chyba: " + err.message);
@@ -444,6 +465,7 @@ if ("geolocation" in navigator) {
 } else {
     debug("GPS nie je podporované.");
 }
+
 
 // =====================
 // AUTOCOMPLETE – Nominatim
